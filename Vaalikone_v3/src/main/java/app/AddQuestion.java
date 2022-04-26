@@ -22,7 +22,7 @@ public class AddQuestion extends HttpServlet {
 	private Dao dao = null;
 
 	// VAALIKONE_V3 REPO SETTING
-
+	// Joona teki muudoksen
 	@Override
 	public void init() {
 		dao = new Dao("jdbc:mysql://localhost:3306/vaalikone?useSSL=false", "sikli", "kukkuu");
