@@ -23,6 +23,7 @@ public class AddQuestion extends HttpServlet {
 
 	// VAALIKONE_V3 REPO SETTING
 
+	// VAALIKONE_V3 WALTTERI BRANCH TESTING
 	@Override
 	public void init() {
 		dao = new Dao("jdbc:mysql://localhost:3306/vaalikone?useSSL=false", "sikli", "kukkuu");
