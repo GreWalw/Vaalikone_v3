@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+<meta http-equiv="content-type"
+	content="application/xhtml+xml; charset=UTF-8" />
+<title>MayoralElectionMachineofHämeenlinna</title>
+
+<style>
+h1 {
+	font-size: 60px;
+}
+
+.btn {
+	background-color: DodgerBlue;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+}
+
+body {
+	background-image: url('images/CastleHame.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 60px;
+	color: white;
+	background-color: DodgerBlue;
+	bottom: 0;
+}
+</style>
+
+</head>
+
+<body>
+	<h1 style="text-align: center;">Welcome to Mayoral Election Machine!</h1>
+
+	<div style="text-align: center;">
+		<div style="float: center;">
+			<form action='/showquestions'>
+				<input class="btn btn1" type="submit" value="Answer the questions!" />
+				<input class="btn btn2" type="submit" value="Check out the candidates!" />
+			</form>
+		</div>
+	</div>
+	
+	<footer>
+		<a style="text-align: center;" href='/showquestions'>Admin pages</a>
+		<a style="text-align: right;" href='/candidates'>Candidate management</a>
+		<p style="text-align: center;">HÄME UNIVERSITY OF APPLIED SCIENCES &emsp;&emsp; TRTKP20A3 &emsp;&emsp; GREK, HEINONEN, KAILANTO</p>
+	</footer>
+
+</body>
+</html>
