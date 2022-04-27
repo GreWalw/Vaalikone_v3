@@ -29,8 +29,9 @@ public class Update extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String id = request.getParameter("id");
 		String question = request.getParameter("question");
+		String qnumber = request.getParameter("qnumber");
 
-		Question q = new Question(id, question);
+		Question q = new Question(id, question, qnumber);
 
 		ArrayList<Question> list = null;
 		if (dao.getConnection()) {
