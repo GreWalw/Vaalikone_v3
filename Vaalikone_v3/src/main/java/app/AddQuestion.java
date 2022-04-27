@@ -67,14 +67,15 @@ public class AddQuestion extends HttpServlet {
 
 		String question = request.getParameter("question");
 		String id = null;
+		String qnumber = request.getParameter("qnumber");
 		
-		Question q = new Question(id, question);
+		Question q = new Question(id, question,qnumber);
 		String kysymys = q.getQuestion();
-
+		int kysymysnumber = q.getQnumber();
 		ArrayList<Question> add = null;
 		if (dao.getConnection()) {
 
-			add = dao.addQuestion(kysymys);
+			add = dao.addQuestion(kysymys, kysymysnumber);
 
 		}
 
