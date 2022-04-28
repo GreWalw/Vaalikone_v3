@@ -21,7 +21,7 @@ public class Answers implements Serializable {
 	
 	// bi-directional many-to-one association to candidates
 	@ManyToOne
-	private Candidates candidate;
+	private Candidates candidates;
 
 	// bi-directional many-to-one association to question1
 	@ManyToOne
@@ -62,11 +62,11 @@ public class Answers implements Serializable {
 	}
 
 	public Candidates getCandidate() {
-		return this.candidate;
+		return this.candidates;
 	}
 
 	public void setCandidate(Candidates candidate) {
-		this.candidate = candidate;
+		this.candidates = candidate;
 	}
 
 	public Question getQuestion() {

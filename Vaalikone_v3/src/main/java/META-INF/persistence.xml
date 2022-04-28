@@ -10,14 +10,14 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 	Here there is just one: app.Fish. All the other should be added in the same way. 	
 	<class>data.Fish</class>-->
 	<class>data.Candidates</class>
-	<class>data.Questions</class>
+	<class>data.Question</class>
 	<class>data.Answers</class>
 
 <!-- If using MySQL 5.7 or newer -->
 <!--  
 	as a root user in the MySQL command prompt give the commands:
 	use performance_schema; 
-	GRANT SELECT ON performance_schema.session_variables TO pena@localhost;
+	GRANT SELECT ON performance_schema.session_variables TO sikli@localhost;
 	
 	Change pena to the username you are using below in the property jdbc.user.
 	 -->		

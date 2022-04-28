@@ -25,7 +25,7 @@ public class Question implements Serializable {
 	private String question;
 
 	
-	@OneToMany(mappedBy="questions")
+	@OneToMany(mappedBy="question")
 //	@JoinTable(name = "answers", joinColumns = { @JoinColumn(name = "cand_id") }, inverseJoinColumns = {
 //			@JoinColumn(name = "quest_id") })
 	private List<Answers> answers;
