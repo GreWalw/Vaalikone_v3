@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 
 @Entity
@@ -23,11 +24,11 @@ public class Question implements Serializable {
 	private int qnumber;
 	private String question;
 
-	// bi-directional many-to-many association to Fishbreed
-	@ManyToMany
-	@JoinTable(name = "answers", joinColumns = { @JoinColumn(name = "cand_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "quest_id") })
-	private List<Candidates> candidates;
+	
+	@OneToMany(mappedBy="questions")
+//	@JoinTable(name = "answers", joinColumns = { @JoinColumn(name = "cand_id") }, inverseJoinColumns = {
+//			@JoinColumn(name = "quest_id") })
+	private List<Answers> answers;
 
 	public Question(String id, String question, String qnumber) {
 		// TODO Auto-generated constructor stub
@@ -77,5 +78,21 @@ public class Question implements Serializable {
 
 	public void setQuestion(String question) {
 		this.question = question;
+	}
+	
+	
+	public List<Answers> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(List<Answers> answers) {
+		this.answers = answers;
+	}
+
+	public Answers addAnswer(Answers answers) {
+		getAnswers().add(answers);
+		answers.setQuestion(this);
+
+		return answers;
 	}
 }
