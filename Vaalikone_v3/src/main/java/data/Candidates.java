@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @Entity
 @NamedQuery(name = "candidates.findAll", query = "SELECT c from candidates c")
@@ -16,8 +17,8 @@ public class Candidates implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@ManyToMany(mappedBy="candidates")
-	private List<Question> questions;
+	@OneToMany(mappedBy="candidates")
+	private List<Answers> answers;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -143,4 +144,20 @@ public class Candidates implements Serializable {
 		this.description = description;
 	}
 
+	public List<Answers> getAnswers() {
+		return this.answers;
+	}
+
+	public void setAnswers(List<Answers> answers) {
+		this.answers = answers;
+	}
+
+	public Answers addAnswer(Answers answers) {
+		getAnswers().add(answers);
+		answers.setCandidate(this);
+
+		return answers;
+	}
+
+	
 }
