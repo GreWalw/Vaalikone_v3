@@ -19,7 +19,7 @@
 	-->
 	
 	<servlet>
-		<servlet-name>laptopservice</servlet-name>
+		<servlet-name>electionservice</servlet-name>
 		<servlet-class>
 			org.glassfish.jersey.servlet.ServletContainer
 		</servlet-class>
@@ -41,7 +41,7 @@
 	the REST class and in its methods
 	-->
 	<servlet-mapping>
-		<servlet-name>laptopservice</servlet-name>
+		<servlet-name>electionservice</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
   

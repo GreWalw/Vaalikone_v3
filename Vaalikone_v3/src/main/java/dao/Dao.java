@@ -51,6 +51,7 @@ public class Dao {
 				Question q = new Question();
 				q.setId(RS.getInt("question_id"));
 				q.setQuestion(RS.getString("question"));
+				q.setQnumber(RS.getInt("question_number"));
 				list.add(q);
 			}
 			return list;
@@ -61,10 +62,11 @@ public class Dao {
 
 	public ArrayList<Question> updateQuestions(Question q) {
 		try {
-			String sql = "update questions set question=? where question_id=?";
+			String sql = "update questions set question=?, question_number=? where question_id=?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, q.getQuestion());
-			pstmt.setInt(2, q.getId());
+			pstmt.setInt(2, q.getQnumber());
+			pstmt.setInt(3, q.getId());
 			pstmt.executeUpdate();
 			return readAllQuestions();
 		} catch (SQLException e) {
@@ -102,10 +104,10 @@ public class Dao {
 		}
 	}
 
-	public ArrayList<Question> addQuestion(String kysmari) {
+	public ArrayList<Question> addQuestion(String kysmari, int qnumber) {
 		Question que = null;
 		try {
-			String sql = "insert into questions (question) values ('" + kysmari + "')";
+			String sql = "insert into questions (question, question_number) values ('" + kysmari + "', '" + qnumber + "')";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
 			return readAllQuestions();

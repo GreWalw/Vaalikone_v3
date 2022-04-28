@@ -21,17 +21,6 @@ public class AddQuestion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Dao dao = null;
 
-	// VAALIKONE_V3 REPO SETTING
-	
-
-
-	// JOEL PUSH TESTI
-
-
-	// VAALIKONE_V3 WALTTERI BRANCH TESTING
-
-	// Joona teki muudoksen
-
 
 	@Override
 	public void init() {
@@ -67,14 +56,15 @@ public class AddQuestion extends HttpServlet {
 
 		String question = request.getParameter("question");
 		String id = null;
+		String qnumber = request.getParameter("qnumber");
 		
-		Question q = new Question(id, question);
+		Question q = new Question(id, question,qnumber);
 		String kysymys = q.getQuestion();
-
+		int kysymysnumber = q.getQnumber();
 		ArrayList<Question> add = null;
 		if (dao.getConnection()) {
 
-			add = dao.addQuestion(kysymys);
+			add = dao.addQuestion(kysymys, kysymysnumber);
 
 		}
 

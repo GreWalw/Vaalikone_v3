@@ -28,7 +28,7 @@ background-color: LightBlue;
 <h2>Manage questions</h2>
 <li>
 <c:forEach var="question" items="${requestScope.questionlist}" >
-<li><b>ID:</b> ${question.id} <b>Question</b>: ${question.question} <a href='/delete?id=${question.id}'>delete</a> 
+<li><b>ID:</b> ${question.id} <b>Question</b>: ${question.question} <b>Question number:</b> ${question.qnumber} <a href='/delete?id=${question.id}'>delete</a> 
 </c:forEach>
 </li>
 
@@ -38,6 +38,8 @@ background-color: LightBlue;
 <input type='text' name='id' value='${requestScope.question.id}'><br> 
 <label for="question">Question:</label><br>
 <input type='text' name='question' value='${requestScope.question.question}'><br>
+<label for="question">Question number:</label><br>
+<input type='text' name='qnumber' value='${requestScope.question.qnumber}'><br>
 <input type='submit' name='ok' value='Send'> 
 </form>
 
@@ -45,6 +47,8 @@ background-color: LightBlue;
 <form action='addquestion' method='post'>
 <label for="question">Question:</label><br>
 <input type='text' name='question' value='${requestScope.question.question}'><br> 
+<label for="question">Question number:</label><br>
+<input type='text' name='qnumber' value='${requestScope.question.qnumber}'><br> 
 <input type='submit' name='ok' value='Send'> 
 </form>
 
