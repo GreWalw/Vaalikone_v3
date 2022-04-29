@@ -1,5 +1,6 @@
 package rest;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +8,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -15,6 +20,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import data.Question;
@@ -24,18 +30,28 @@ import data.Candidate;
 @Path("/electionservice")
 public class ElectionService {
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("vaalikone");
-
+	@Context
+	HttpServletRequest request;
+	@Context
+	HttpServletResponse response;
 	@GET
 	@Path("/readanswers")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Answer> readAnswers() {
+	public void readAnswers() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		List<Answer> list = em.createQuery("select a from Answer a").getResultList();
 		em.getTransaction().commit();
 		em.close();
-		return list;
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/manageanswers.jsp");
+		request.setAttribute("answerlist", list);
+		try {
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@GET

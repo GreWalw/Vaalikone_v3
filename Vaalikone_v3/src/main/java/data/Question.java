@@ -32,8 +32,10 @@ public class Question implements Serializable {
 	public Question() {
 	}
 
-	public Question(String id, String question2, String qnumber) {
-		// TODO Auto-generated constructor stub
+	public Question(String id, String question, String qnumber) {
+		setQuestionId(id);
+		this.question = question;
+		setQuestionNumber(qnumber);
 	}
 
 	public int getQuestionId() {
@@ -43,7 +45,13 @@ public class Question implements Serializable {
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
+	public void setQuestionId(String questionId) {
+		try {
+			this.questionId = Integer.parseInt(questionId);
+		} catch (NumberFormatException | NullPointerException e) {
 
+		}
+	}
 	public String getQuestion() {
 		return this.question;
 	}
@@ -59,7 +67,13 @@ public class Question implements Serializable {
 	public void setQuestionNumber(int questionNumber) {
 		this.questionNumber = questionNumber;
 	}
+	public void setQuestionNumber(String questionNumber) {
+		try {
+			this.questionNumber = Integer.parseInt(questionNumber);
+		} catch (NumberFormatException | NullPointerException e) {
 
+		}
+	}
 	public List<Answer> getAnswers() {
 		return this.answers;
 	}

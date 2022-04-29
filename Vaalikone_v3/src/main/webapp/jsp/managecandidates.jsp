@@ -25,8 +25,8 @@ background-color: LightBlue;
 <a style="text-align: center;" href='/showquestions'>Edit questions</a>
 <h2>Manage candidates</h2>
 <li>
-<c:forEach var="candidates" items="${requestScope.candidatelist}" >
-<li><b>ID:</b> ${candidate.id} ${candidate.surname}, ${candidate.firstname} <b>Candidate number:</b> ${candidate.candNumb} <b>Age:</b> ${candidate.age}, ${candidate.hometown} <b>Party:</b> ${candidate.party} <b>Profession:</b> ${candidate.profession}, "${candidate.description}" 
+<c:forEach var="candidate" items="${requestScope.candidatelist}" >
+<li><b>ID:</b> ${candidate.candidateId} ${candidate.surname}, ${candidate.firstName} <b>Candidate number:</b> ${candidate.candNo} <b>Age:</b> ${candidate.age}, ${candidate.hometown} <b>Party:</b> ${candidate.party} <b>Profession:</b> ${candidate.profession}, "${candidate.descr}" 
 </c:forEach>
 </li>
 <h2>Update a candidate</h2>

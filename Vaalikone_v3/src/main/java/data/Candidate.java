@@ -4,30 +4,29 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
  * The persistent class for the candidates database table.
  * 
  */
 @Entity
-@Table(name="candidates")
-@NamedQuery(name="Candidate.findAll", query="SELECT c FROM Candidate c")
+@Table(name = "candidates")
+@NamedQuery(name = "Candidate.findAll", query = "SELECT c FROM Candidate c")
 public class Candidate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="CANDIDATE_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "CANDIDATE_ID")
 	private int candidateId;
 
 	private int age;
 
-	@Column(name="CAND_NO")
+	@Column(name = "CAND_NO")
 	private int candNo;
 
 	private String descr;
 
-	@Column(name="FIRST_NAME")
+	@Column(name = "FIRST_NAME")
 	private String firstName;
 
 	private String hometown;
@@ -38,16 +37,24 @@ public class Candidate implements Serializable {
 
 	private String surname;
 
-	//bi-directional many-to-one association to Answer
-	@OneToMany(mappedBy="candidate")
+	// bi-directional many-to-one association to Answer
+	@OneToMany(mappedBy = "candidate")
 	private List<Answer> answers;
 
 	public Candidate() {
 	}
 
-	public Candidate(String id, String surname2, String firstname2, String candNumb, String age2, String hometown2,
-			String party2, String profession2, String description) {
-		// TODO Auto-generated constructor stub
+	public Candidate(String id, String surname, String firstname, String candNumb, String age, String hometown,
+			String party, String profession, String description) {
+		setId(id);
+		this.surname = surname;
+		this.firstName = firstname;
+		setCandNo(candNumb);
+		setAge(age);
+		this.hometown = hometown;
+		this.party = party;
+		this.profession = profession;
+		this.descr = description;
 	}
 
 	public int getCandidateId() {
@@ -58,6 +65,14 @@ public class Candidate implements Serializable {
 		this.candidateId = candidateId;
 	}
 
+	public void setId(String id) {
+		try {
+			this.candidateId = Integer.parseInt(id);
+		} catch (NumberFormatException | NullPointerException e) {
+
+		}
+	}
+
 	public int getAge() {
 		return this.age;
 	}
@@ -65,13 +80,27 @@ public class Candidate implements Serializable {
 	public void setAge(int age) {
 		this.age = age;
 	}
+	public void setAge(String age) {
+		try {
+			this.age = Integer.parseInt(age);
+		} catch (NumberFormatException | NullPointerException e) {
 
+		}
+	}
 	public int getCandNo() {
 		return this.candNo;
 	}
 
 	public void setCandNo(int candNo) {
 		this.candNo = candNo;
+	}
+
+	public void setCandNo(String candNo) {
+		try {
+			this.candNo = Integer.parseInt(candNo);
+		} catch (NumberFormatException | NullPointerException e) {
+
+		}
 	}
 
 	public String getDescr() {
