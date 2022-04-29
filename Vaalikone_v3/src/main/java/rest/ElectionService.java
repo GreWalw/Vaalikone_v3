@@ -36,16 +36,16 @@ public class ElectionService {
 	}
 
 	@POST
-	@Path("/addfish")
+	@Path("/addanswer")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Fish> addFish(Fish fish) {
+	public List<Answers> addFish(Answers answers) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		em.persist(fish);// The actual insertion line
+		em.persist(answers);// The actual insertion line
 		em.getTransaction().commit();
 		// Calling the method readFish() of this service
-		List<Fish> list = readFish();
+		List<Answers> list = readAnswers();
 		return list;
 	}
 
