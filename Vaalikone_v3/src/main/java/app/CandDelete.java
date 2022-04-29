@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.Dao;
-import data.Candidates;
+import data.Candidate;
 
 @WebServlet(name = "CandDelete", urlPatterns = { "/canddelete" })
 public class CandDelete extends HttpServlet {
@@ -24,7 +24,7 @@ public class CandDelete extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String id = request.getParameter("id");
-		ArrayList<Candidates> list = null;
+		ArrayList<Candidate> list = null;
 		if (dao.getConnection()) {
 			list = dao.deleteCandidate(id);
 		}
