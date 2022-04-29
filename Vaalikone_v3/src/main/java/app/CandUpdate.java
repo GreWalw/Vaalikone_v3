@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.Dao;
-import data.Candidates;
+import data.Candidate;
 
 
 @WebServlet(
@@ -40,9 +40,9 @@ public class CandUpdate extends HttpServlet {
 		String party=request.getParameter("party");
 		String profession=request.getParameter("profession");
 		String description=request.getParameter("description");
-		Candidates c=new Candidates(id, surname, firstname, candNumb, age, hometown, party, profession, description);
+		Candidate c=new Candidate(id, surname, firstname, candNumb, age, hometown, party, profession, description);
 		
-		ArrayList<Candidates> list=null;
+		ArrayList<Candidate> list=null;
 		if (dao.getConnection()) {
 			list=dao.updateCandidates(c);
 		}

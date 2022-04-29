@@ -18,8 +18,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import data.Question;
-import data.Candidates;
-import data.Answers;
+import data.Answer;
+import data.Candidate;
 
 @Path("/electionservice")
 public class ElectionService {
@@ -29,11 +29,12 @@ public class ElectionService {
 	@Path("/readanswers")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Answers> readAnswers() {
+	public List<Answer> readAnswers() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		List<Answers> list = em.createQuery("select xyx from Answers xyx").getResultList();
+		List<Answer> list = em.createQuery("select a from Answer a").getResultList();
 		em.getTransaction().commit();
+		em.close();
 		return list;
 	}
 	
@@ -45,8 +46,9 @@ public class ElectionService {
 		System.out.println("Terse");
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		List<Question> list = em.createQuery("select xyx from Questions xyx").getResultList();
+		List<Question> list = em.createQuery("select q from Question q").getResultList();
 		em.getTransaction().commit();
+		em.close();
 		System.out.println("Moro");
 		return list;
 	}
@@ -54,12 +56,12 @@ public class ElectionService {
 	@Path("/readcandidates/{p1}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Candidates readCandidates(@PathParam("p1") int candId) {
-		Candidates c = new Candidates();
-		candId = c.getId();
+	public Candidate readCandidates(@PathParam("p1") int candId) {
+		Candidate c = new Candidate();
+		candId = c.getCandidateId();
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		List<Candidates> list = em.createQuery("select xyx from Candidates where candidate_id=" + c.getId()).getResultList();
+		List<Candidate> list = em.createQuery("select c from Candidate where candId=" + c.getCandidateId()).getResultList();
 		em.getTransaction().commit();
 		return list.get(candId);
 	}
@@ -67,19 +69,19 @@ public class ElectionService {
 	@Path("/answerform")
 	private void printForm(PrintWriter out) {
         EntityManager em=emf.createEntityManager();
-        List<Candidates> candilist=em.createQuery("select a from Candidates a").getResultList();
-        List<Question> questionlist=em.createQuery("select a from Questions a").getResultList();
+        List<Candidate> candilist=em.createQuery("select c from Candidate c").getResultList();
+        List<Question> questionlist=em.createQuery("select q from Question q").getResultList();
 
         out.println("<form action='/addanswerform/addanswer' method='get'</form>");
         out.println("Answer: <input type='text' name='answer' value=''><br>");
         out.println("Candi: <select name='candi'>");
-        for (Candidates candi:candilist) {
-            out.println("<option value='"+candi.getId()+"'>"+candi.getSurname()+candi.getFirstname());
+        for (Candidate candi:candilist) {
+            out.println("<option value='"+candi.getCandidateId()+"'>"+candi.getSurname()+candi.getFirstName());
         }
         out.println("</select><br>");
         out.println("Question: <select name='q'>");
         for (Question q:questionlist) {
-            out.println("<option value='"+q.getId()+"'>"+q.getQuestion());
+            out.println("<option value='"+q.getQuestionId()+"'>"+q.getQuestion());
         }
         out.println("</select><br>");
         out.println("<input type='submit' name='ok' value='OK'><br>");

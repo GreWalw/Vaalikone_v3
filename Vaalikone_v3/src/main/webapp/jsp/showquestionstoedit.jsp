@@ -28,7 +28,7 @@
   
 	<form action='update' method='post'>
 		Question id: <input type='text' name='id'
-			value='${requestScope.question.id}' readonly><br>
+			value='${requestScope.question.questionId}' readonly><br>
 		Question: <input type='text' name='question'
 			value='${requestScope.question.question}'><br> <input
 			type='submit' name='ok' value='Send'>
