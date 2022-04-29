@@ -60,7 +60,7 @@ public class AddQuestion extends HttpServlet {
 		
 		Question q = new Question(id, question,qnumber);
 		String kysymys = q.getQuestion();
-		int kysymysnumber = q.getQnumber();
+		int kysymysnumber = q.getQuestionNumber();
 		ArrayList<Question> add = null;
 		if (dao.getConnection()) {
 

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.Dao;
-import data.Candidates;
+import data.Candidate;
 
 /**
  * Servlet implementation class ReadToUpdate
@@ -40,7 +40,7 @@ public class CandReadToUpdate extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String id = request.getParameter("id");
-		Candidates c = null;
+		Candidate c = null;
 		if (dao.getConnection()) {
 			c = dao.readCandidate(id);
 		}
