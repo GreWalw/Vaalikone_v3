@@ -1,98 +1,99 @@
 package data;
 
-import java.util.List;
 import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.JoinColumn;
 
+/**
+ * The persistent class for the questions database table.
+ * 
+ */
 @Entity
-@NamedQuery(name = "questions.findAll", query = "SELECT q from questions q")
+@Table(name="questions")
+@NamedQuery(name="Question.findAll", query="SELECT q FROM Question q")
 public class Question implements Serializable {
-
 	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private int qnumber;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="QUESTION_ID")
+	private int questionId;
+
 	private String question;
 
-	
-	@OneToMany(mappedBy="questions")
-//	@JoinTable(name = "answers", joinColumns = { @JoinColumn(name = "cand_id") }, inverseJoinColumns = {
-//			@JoinColumn(name = "quest_id") })
-	private List<Answers> answers;
+	@Column(name="QUESTION_NUMBER")
+	private int questionNumber;
 
-	public Question(String id, String question, String qnumber) {
-		// TODO Auto-generated constructor stub
-		setId(id);
-		this.question = question;
-		setQnumber(qnumber);
-	}
+	//bi-directional many-to-one association to Answer
+	@OneToMany(mappedBy="question")
+	private List<Answer> answers;
 
 	public Question() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public int getId() {
-		return id;
+	public Question(String id, String question, String qnumber) {
+		setQuestionId(id);
+		this.question = question;
+		setQuestionNumber(qnumber);
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getQuestionId() {
+		return this.questionId;
 	}
 
-	public void setId(String id) {
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
+	}
+	public void setQuestionId(String questionId) {
 		try {
-			this.id = Integer.parseInt(id);
+			this.questionId = Integer.parseInt(questionId);
 		} catch (NumberFormatException | NullPointerException e) {
-			// Do nothing - the value of id won't be changed
+
 		}
 	}
-
-	public int getQnumber() {
-		return qnumber;
-	}
-
-	public void setQnumber(int qnumber) {
-		this.qnumber = qnumber;
-	}
-	public void setQnumber(String qnumber) {
-		try {
-			this.qnumber = Integer.parseInt(qnumber);
-		} catch (NumberFormatException | NullPointerException e) {
-			// Do nothing - the value of qnumber won't be changed
-		}
-	}
-
 	public String getQuestion() {
-		return question;
+		return this.question;
 	}
 
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-	
-	
-	public List<Answers> getAnswers() {
-		return answers;
+
+	public int getQuestionNumber() {
+		return this.questionNumber;
 	}
 
-	public void setAnswers(List<Answers> answers) {
+	public void setQuestionNumber(int questionNumber) {
+		this.questionNumber = questionNumber;
+	}
+	public void setQuestionNumber(String questionNumber) {
+		try {
+			this.questionNumber = Integer.parseInt(questionNumber);
+		} catch (NumberFormatException | NullPointerException e) {
+
+		}
+	}
+	public List<Answer> getAnswers() {
+		return this.answers;
+	}
+
+	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
 	}
 
-	public Answers addAnswer(Answers answers) {
-		getAnswers().add(answers);
-		answers.setQuestion(this);
+	public Answer addAnswer(Answer answer) {
+		getAnswers().add(answer);
+		answer.setQuestion(this);
 
-		return answers;
+		return answer;
 	}
+
+	public Answer removeAnswer(Answer answer) {
+		getAnswers().remove(answer);
+		answer.setQuestion(null);
+
+		return answer;
+	}
+
 }

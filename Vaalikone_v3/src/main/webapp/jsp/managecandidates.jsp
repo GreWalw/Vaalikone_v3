@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
  
  <%@ page import="java.util.ArrayList" %>   
- <%@ page import="data.Candidates" %>   
+ <%@ page import="data.Candidate" %>   
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
@@ -25,8 +25,8 @@ background-color: LightBlue;
 <a style="text-align: center;" href='/showquestions'>Edit questions</a>
 <h2>Manage candidates</h2>
 <li>
-<c:forEach var="candidates" items="${requestScope.candidatelist}" >
-<li><b>ID:</b> ${candidates.id} ${candidates.surname}, ${candidates.firstname} <b>Candidate number:</b> ${candidates.candNumb} <b>Age:</b> ${candidates.age}, ${candidates.hometown} <b>Party:</b> ${candidates.party} <b>Profession:</b> ${candidates.profession}, "${candidates.description}" 
+<c:forEach var="candidate" items="${requestScope.candidatelist}" >
+<li><b>ID:</b> ${candidate.candidateId} ${candidate.surname}, ${candidate.firstName} <b>Candidate number:</b> ${candidate.candNo} <b>Age:</b> ${candidate.age}, ${candidate.hometown} <b>Party:</b> ${candidate.party} <b>Profession:</b> ${candidate.profession}, "${candidate.descr}" 
 </c:forEach>
 </li>
 <h2>Update a candidate</h2>
@@ -34,23 +34,23 @@ background-color: LightBlue;
 
 <form action='candupdate' method='post'> 
 <label for="id">Candidate id:</label><br>
-<input type='text' name='id' value='${requestScope.candidates.id}'><br> 
+<input type='text' name='id' value='${requestScope.candidate.candidateId}'><br> 
 <label for="surname">Surname:</label><br>
-<input type='text' name='surname' value='${requestScope.candidates.surname}'><br>
+<input type='text' name='surname' value='${requestScope.candidate.surname}'><br>
 <label for="firstname">First name:</label><br>
-<input type='text' name='firstname' value='${requestScope.candidates.firstname}'><br>
+<input type='text' name='firstname' value='${requestScope.candidate.firstName}'><br>
 <label for="candNumb">Candidate number:</label><br>
-<input type='text' name='candNumb' value='${requestScope.candidates.candNumb}'><br>
+<input type='text' name='candNumb' value='${requestScope.candidate.candNo}'><br>
 <label for="age">Age:</label><br>
-<input type='text' name='age' value='${requestScope.candidates.age}'><br>
+<input type='text' name='age' value='${requestScope.candidate.age}'><br>
 <label for="hometown">Home town:</label><br>
-<input type='text' name='hometown' value='${requestScope.candidates.hometown}'><br>
+<input type='text' name='hometown' value='${requestScope.candidate.hometown}'><br>
 <label for="party">Party:</label><br>
-<input type='text' name='party' value='${requestScope.candidates.party}'><br>
+<input type='text' name='party' value='${requestScope.candidate.party}'><br>
 <label for="profession">Profession:</label><br>
-<input type='text' name='profession' value='${requestScope.candidates.profession}'><br>
+<input type='text' name='profession' value='${requestScope.candidate.profession}'><br>
 <label for="description">Description:</label><br>
-<input type='text' name='description' value='${requestScope.candidates.description}'><br>
+<input type='text' name='description' value='${requestScope.candidate.descr}'><br>
 <input type='submit' name='ok' value='Send'> 
 </form>
 <br>
@@ -61,9 +61,9 @@ background-color: LightBlue;
 <label for="surname">Surname:</label><br>
 <input type='text' name='surname' value='${requestScope.candidate.surname}'><br>
 <label for="firstname">First name:</label><br>
-<input type='text' name='firstname' value='${requestScope.candidate.firstname}'><br>
+<input type='text' name='firstname' value='${requestScope.candidate.firstName}'><br>
 <label for="candNumb">Candidate number:</label><br>
-<input type='text' name='candNumb' value='${requestScope.candidate.candNumb}'><br>
+<input type='text' name='candNumb' value='${requestScope.candidate.candNo}'><br>
 <label for="age">Age:</label><br>
 <input type='text' name='age' value='${requestScope.candidate.age}'><br>
 <label for="hometown">Home town:</label><br>
@@ -73,7 +73,7 @@ background-color: LightBlue;
 <label for="profession">Profession:</label><br>
 <input type='text' name='profession' value='${requestScope.candidate.profession}'><br>
 <label for="description">Description:</label><br>
-<input type='text' name='description' value='${requestScope.candidate.description}'><br>
+<input type='text' name='description' value='${requestScope.candidate.descr}'><br>
 <input type='submit' name='ok' value='Send'> 
 </form>
 
