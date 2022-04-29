@@ -26,7 +26,7 @@ background-color: LightBlue;
 <h2>Manage candidates</h2>
 <li>
 <c:forEach var="candidate" items="${requestScope.candidatelist}" >
-<li><b>ID:</b> ${candidate.candidateId} ${candidate.surname}, ${candidate.firstName} <b>Candidate number:</b> ${candidate.candNo} <b>Age:</b> ${candidate.age}, ${candidate.hometown} <b>Party:</b> ${candidate.party} <b>Profession:</b> ${candidate.profession}, "${candidate.descr}" <a href='/canddelete?id=${candidate.candidateId}'>delete</a> 
+<li><b>ID:</b> ${candidate.candidateId} <b>Candidate number:</b> ${candidate.candNo} ${candidate.surname}, ${candidate.firstName} <b>Age:</b> ${candidate.age}, ${candidate.hometown} <b>Party:</b> ${candidate.party} <b>Profession:</b> ${candidate.profession}, "${candidate.descr}" <a href='/canddelete?id=${candidate.candidateId}'>delete</a> 
 </c:forEach>
 </li>
 <h2>Update a candidate</h2>
