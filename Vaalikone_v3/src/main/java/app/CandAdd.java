@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.Dao;
-import data.Candidates;
+import data.Candidate;
 
 /**
  * Servlet implementation class CandAdd
@@ -62,17 +62,17 @@ public class CandAdd extends HttpServlet {
 		String profession = request.getParameter("profession");
 		String description = request.getParameter("description");
 		
-		Candidates c = new Candidates(id, surname, firstname, candNumb, age, hometown, party, profession, description);
+		Candidate c = new Candidate(id, surname, firstname, candNumb, age, hometown, party, profession, description);
 		String cSurname = c.getSurname();
-		String cFirstname = c.getFirstname();
-		int cCandnumb = c.getCandNumb();
+		String cFirstname = c.getFirstName();
+		int cCandnumb = c.getCandNo();
 		int cAge = c.getAge();
 		String cHometown = c.getHometown();
 		String cParty = c.getParty();
 		String cProfession = c.getProfession();
-		String cDescription = c.getDescription();
+		String cDescription = c.getDescr();
 				
-		ArrayList<Candidates> add = null;
+		ArrayList<Candidate> add = null;
 		if (dao.getConnection()) {
 
 			add = dao.addCandidate(cSurname, cFirstname, cCandnumb, cAge, cHometown, cParty, cProfession, cDescription);
