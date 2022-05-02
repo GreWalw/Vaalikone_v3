@@ -15,7 +15,7 @@
 
 <label for="candis">Choose a candidate:</label>
 
-<form action="/rest/electionservice/testmap" method="post">
+<form action="/rest/electionservice/addanswer" method="post">
 <select name="candidateDrop" id="candidateDrop">
 <c:forEach var="candidate" items="${requestScope.candidatelist}" >
 <option value="${candidate.candidateId}">${candidate.candNo}: ${candidate.surname} ${candidate.firstName}</option>

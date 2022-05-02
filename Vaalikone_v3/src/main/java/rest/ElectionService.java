@@ -131,54 +131,50 @@ public class ElectionService {
 		return list;
 	}
 	
+//	@POST
+//	@Path("/addanswer")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	public void addAnswer(Answer answers) {
+//		EntityManager em = emf.createEntityManager();
+//		em.getTransaction().begin();
+//		em.persist(answers);// The actual insertion line
+//		em.getTransaction().commit();
+//		// Calling the method readFish() of this service
+//	}
+	
+	
+
 	@POST
 	@Path("/addanswer")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void addAnswer(Answer answers) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(answers);// The actual insertion line
-		em.getTransaction().commit();
-		// Calling the method readFish() of this service
-	}
-	
-	@POST
-	@Path("/answerform")
-	private void printForm(PrintWriter out) {
-        EntityManager em=emf.createEntityManager();
-        List<Candidate> candilist=em.createQuery("select c from Candidate c").getResultList();
-        List<Question> questionlist=em.createQuery("select q from Question q").getResultList();
-
-        out.println("<form action='/addanswerform/addanswer' method='get'</form>");
-        out.println("Answer: <input type='text' name='answer' value=''><br>");
-        out.println("Candi: <select name='candi'>");
-        for (Candidate candi:candilist) {
-            out.println("<option value='"+candi.getCandidateId()+"'>"+candi.getSurname()+candi.getFirstName());
-        }
-        out.println("</select><br>");
-        out.println("Question: <select name='q'>");
-        for (Question q:questionlist) {
-            out.println("<option value='"+q.getQuestionId()+"'>"+q.getQuestion());
-        }
-        out.println("</select><br>");
-        out.println("<input type='submit' name='ok' value='OK'><br>");
-        out.println("</form>");
-    }
-
-	@POST
-	@Path("/testmap")
 	@Consumes("application/x-www-form-urlencoded")
-	public void post(MultivaluedMap<String, String> formParams) {
+	public void addAnswer(MultivaluedMap<String, String> formParams) {
 	    // Store the message
+		String candId=formParams.getFirst("candidateDrop");
+		Candidate candidate = new Candidate();
+		candidate.setId(candId);
+		Question question = new Question();
 		for (String key: formParams.keySet()) {
 			if (key.startsWith("valitteppa")) {
-				System.out.println(key+"   " + formParams.getFirst(key));
+				
+				String answerValue = formParams.getFirst(key);
+				int answerValInt = Integer.parseInt(answerValue);
+				//System.out.println(key+" " + answerValue);
 				String questionId = key.substring(10);
-				System.out.println(questionId);
+				//System.out.println(questionId);
+				Answer answer = new Answer();
+				question.setQuestionId(questionId);
+				answer.setCandidate(candidate);
+				answer.setQuestion(question);
+				answer.setAnswer(answerValInt);
+				EntityManager em = emf.createEntityManager();
+				em.getTransaction().begin();
+				em.persist(answer);// The actual insertion line
+				em.getTransaction().commit();
+				
 			}
 		}
-		System.out.println(formParams.getFirst("candidateDrop"));
+		
 	}
 	
 }
