@@ -58,50 +58,48 @@ public class ElectionService {
 	@Path("/readquestions")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Question> readQuestions() {
-		System.out.println("Terse");
+	public void readQuestions() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		List<Question> list = em.createQuery("select q from Question q").getResultList();
+		List<Candidate> list2 = em.createQuery("select c from Candidate c").getResultList();
 		em.getTransaction().commit();
 		em.close();
-		System.out.println("Moro");
-		return list;
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/manageanswers.jsp");
+		request.setAttribute("questionlist", list);
+		request.setAttribute("candidatelist", list2);
+		try {
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+
+			e.printStackTrace();
+		}
 	}
 	@GET
-	@Path("/readcandidates/{p1}")
+	@Path("/readcandidates")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Candidate readCandidates(@PathParam("p1") int candId) {
-		Candidate c = new Candidate();
-		candId = c.getCandidateId();
+	public void readCandidates() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		List<Candidate> list = em.createQuery("select c from Candidate where candId=" + c.getCandidateId()).getResultList();
+		List<Candidate> list = em.createQuery("select c from Candidate c").getResultList();
 		em.getTransaction().commit();
-		return list.get(candId);
+		em.close();
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/manageanswers.jsp");
+		request.setAttribute("candidatelist", list);
+		try {
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+
+			e.printStackTrace();
+		}
 	}
 	@POST
-
-	@Path("/addanswer")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void addAnswer(Answer answers) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(answers);// The actual insertion line
-		em.getTransaction().commit();
-		// Calling the method readFish() of this service
-		
-		
-	}
-
 	@Path("/answerform")
 	private void printForm(PrintWriter out) {
         EntityManager em=emf.createEntityManager();
         List<Candidate> candilist=em.createQuery("select c from Candidate c").getResultList();
         List<Question> questionlist=em.createQuery("select q from Question q").getResultList();
-
 
         out.println("<form action='/addanswerform/addanswer' method='get'</form>");
         out.println("Answer: <input type='text' name='answer' value=''><br>");
@@ -123,13 +121,13 @@ public class ElectionService {
 //	@Path("/addfish")
 //	@Produces(MediaType.APPLICATION_JSON)
 //	@Consumes(MediaType.APPLICATION_JSON)
-//	public List<Answer> addFish(Answer answer) {
+//	public List<Fish> addFish(Fish fish) {
 //		EntityManager em = emf.createEntityManager();
 //		em.getTransaction().begin();
-//		em.persist(answer);// The actual insertion line
+//		em.persist(fish);// The actual insertion line
 //		em.getTransaction().commit();
 //		// Calling the method readFish() of this service
-//		List<Answer> list = readAnswers();
+//		List<Fish> list = readFish();
 //		return list;
 //	}
 //
