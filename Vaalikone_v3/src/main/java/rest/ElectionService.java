@@ -62,10 +62,12 @@ public class ElectionService {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		List<Question> list = em.createQuery("select q from Question q").getResultList();
+		List<Candidate> list2 = em.createQuery("select c from Candidate c").getResultList();
 		em.getTransaction().commit();
 		em.close();
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/manageanswers.jsp");
 		request.setAttribute("questionlist", list);
+		request.setAttribute("candidatelist", list2);
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
