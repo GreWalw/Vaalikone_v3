@@ -30,7 +30,9 @@ public class Answer implements Serializable {
 	@JoinColumn(name="QUEST_ID")
 	private Question question;
 
+	
 	public Answer() {
+		
 	}
 
 	public int getId() {
