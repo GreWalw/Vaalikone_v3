@@ -86,14 +86,14 @@ public class ElectionService {
 	@Path("/addanswer")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Answer> addFish(Answer answers) {
+	public void addAnswer(Answer answers) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(answers);// The actual insertion line
 		em.getTransaction().commit();
 		// Calling the method readFish() of this service
-		List<Answer> list = readAnswer();
-		return list;
+		
+		
 	}
 
 	@Path("/answerform")
@@ -123,13 +123,13 @@ public class ElectionService {
 //	@Path("/addfish")
 //	@Produces(MediaType.APPLICATION_JSON)
 //	@Consumes(MediaType.APPLICATION_JSON)
-//	public List<Fish> addFish(Fish fish) {
+//	public List<Answer> addFish(Answer answer) {
 //		EntityManager em = emf.createEntityManager();
 //		em.getTransaction().begin();
-//		em.persist(fish);// The actual insertion line
+//		em.persist(answer);// The actual insertion line
 //		em.getTransaction().commit();
 //		// Calling the method readFish() of this service
-//		List<Fish> list = readFish();
+//		List<Answer> list = readAnswers();
 //		return list;
 //	}
 //
