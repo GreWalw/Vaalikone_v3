@@ -28,7 +28,9 @@ background-color: LightBlue;
 <h2>Manage questions</h2>
 <li>
 <c:forEach var="question" items="${requestScope.questionlist}" >
+
 <li><b>ID:</b> ${question.questionId} <b>NUMBER:</b> ${question.questionNumber} <b>QUESTION:</b>: ${question.question} <a href='/delete?id=${question.questionId}'>delete</a> 
+
 </c:forEach>
 </li>
 
