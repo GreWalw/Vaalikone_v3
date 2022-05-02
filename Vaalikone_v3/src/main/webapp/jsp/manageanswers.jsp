@@ -6,6 +6,13 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Answer Management</title>
+<style>
+
+body {
+background-color: LightBlue;
+}
+
+</style>
 </head>
 <body>
 <a style="text-align: center;" href='/index.html'>Home page</a><br>
