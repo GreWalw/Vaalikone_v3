@@ -75,6 +75,7 @@ public class ElectionService {
 			e.printStackTrace();
 		}
 	}
+	
 	@GET
 	@Path("/readcandidates")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -94,6 +95,41 @@ public class ElectionService {
 			e.printStackTrace();
 		}
 	}
+	
+	@PUT
+	@Path("/updateanswer")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<Answer> updateAnswer(Answer Answer) {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		Answer f = em.find(Answer.class, Answer.getId());
+		if (f != null) {
+			em.merge(Answer);// The actual update line
+		}
+		em.getTransaction().commit();
+		// Calling the method readFish() of this service
+		List<Answer> list = readAnswers();
+		return list;
+	}
+	
+	@DELETE
+	@Path("/deleteanswer/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<Answer> deleteAnswer(@PathParam("id") int id) {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		Answer f = em.find(Answer.class, id);
+		if (f != null) {
+			em.remove(f);// The actual insertion line
+		}
+		em.getTransaction().commit();
+		// Calling the method readFish() of this service
+		List<Answer> list = readAnswers();
+		return list;
+	}
+	
 	@POST
 	@Path("/answerform")
 	private void printForm(PrintWriter out) {
@@ -115,66 +151,6 @@ public class ElectionService {
         out.println("</select><br>");
         out.println("<input type='submit' name='ok' value='OK'><br>");
         out.println("</form>");
-
     }
-//	@POST
-//	@Path("/addfish")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public List<Fish> addFish(Fish fish) {
-//		EntityManager em = emf.createEntityManager();
-//		em.getTransaction().begin();
-//		em.persist(fish);// The actual insertion line
-//		em.getTransaction().commit();
-//		// Calling the method readFish() of this service
-//		List<Fish> list = readFish();
-//		return list;
-//	}
-//
-//	@PUT
-//	@Path("/updatefish")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public List<Fish> updateFish(Fish fish) {
-//		EntityManager em = emf.createEntityManager();
-//		em.getTransaction().begin();
-//		Fish f = em.find(Fish.class, fish.getId());
-//		if (f != null) {
-//			em.merge(fish);// The actual update line
-//		}
-//		em.getTransaction().commit();
-//		// Calling the method readFish() of this service
-//		List<Fish> list = readFish();
-//		return list;
-//	}
-//
-//	@DELETE
-//	@Path("/deletefish/{id}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public List<Fish> deleteFish(@PathParam("id") int id) {
-//		EntityManager em = emf.createEntityManager();
-//		em.getTransaction().begin();
-//		Fish f = em.find(Fish.class, id);
-//		if (f != null) {
-//			em.remove(f);// The actual insertion line
-//		}
-//		em.getTransaction().commit();
-//		// Calling the method readFish() of this service
-//		List<Fish> list = readFish();
-//		return list;
-//	}
-//
-//	@GET
-//	@Path("/readtoupdatefish/{id}")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Fish readToUpdateFish(@PathParam("id") int id) {
-//		EntityManager em = emf.createEntityManager();
-//		em.getTransaction().begin();
-//		Fish f = em.find(Fish.class, id);
-//		em.getTransaction().commit();
-//		return f;
-//	}
 
 }
