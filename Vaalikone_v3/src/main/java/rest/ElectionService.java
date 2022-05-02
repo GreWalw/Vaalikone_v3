@@ -35,6 +35,7 @@ public class ElectionService {
 	HttpServletRequest request;
 	@Context
 	HttpServletResponse response;
+	
 	@GET
 	@Path("/readanswers")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -72,7 +73,6 @@ public class ElectionService {
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
-
 			e.printStackTrace();
 		}
 	}
@@ -92,7 +92,6 @@ public class ElectionService {
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
-
 			e.printStackTrace();
 		}
 	}
