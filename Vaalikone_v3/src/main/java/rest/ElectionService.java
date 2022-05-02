@@ -131,6 +131,18 @@ public class ElectionService {
 	}
 	
 	@POST
+	@Path("/addanswer")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addAnswer(Answer answers) {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		em.persist(answers);// The actual insertion line
+		em.getTransaction().commit();
+		// Calling the method readFish() of this service
+	}
+	
+	@POST
 	@Path("/answerform")
 	private void printForm(PrintWriter out) {
         EntityManager em=emf.createEntityManager();
