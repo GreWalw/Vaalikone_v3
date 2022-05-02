@@ -15,10 +15,10 @@
 
 <label for="candis">Choose a candidate:</label>
 
-
+<form action="/rest/electionservice/testmap" method="post">
 <select name="candidateDrop" id="candidateDrop">
 <c:forEach var="candidate" items="${requestScope.candidatelist}" >
-<option value="">${candidate.candNo}: ${candidate.surname} ${candidate.firstName}</option>
+<option value="${candidate.candidateId}">${candidate.candNo}: ${candidate.surname} ${candidate.firstName}</option>
 
 </c:forEach>
  
@@ -26,15 +26,15 @@
 </select> 
 <br><br><br>
 
-<form>
+
 <c:forEach var="question" items="${requestScope.questionlist}" >
 <li><b>${question.questionNumber}</b><b>:</b> "${question.question}"<br><br>
-<input type="radio" id="questionid" name="Valitteppa" value="1">
-<input type="radio" id="questionid" name="Valitteppa" value="2">
-<input type="radio" id="questionid" name="Valitteppa" value="3">
-<input type="radio" id="questionid" name="Valitteppa" value="4">
-<input type="radio" id="questionid" name="Valitteppa" value="5">
-<input type="submit" id="editanswer" name="editanswer" value="Update your answer"><br>
+<input type="radio" name="valitteppa${question.questionId}" value="1">
+<input type="radio" name="valitteppa${question.questionId}" value="2">
+<input type="radio" name="valitteppa${question.questionId}" value="3">
+<input type="radio" name="valitteppa${question.questionId}" value="4">
+<input type="radio" name="valitteppa${question.questionId}" value="5">
+
 
 <br>
 </c:forEach>

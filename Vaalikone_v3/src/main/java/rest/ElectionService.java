@@ -22,6 +22,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 
 import data.Question;
 import data.Answer;
@@ -165,4 +166,19 @@ public class ElectionService {
         out.println("</form>");
     }
 
+	@POST
+	@Path("/testmap")
+	@Consumes("application/x-www-form-urlencoded")
+	public void post(MultivaluedMap<String, String> formParams) {
+	    // Store the message
+		for (String key: formParams.keySet()) {
+			if (key.startsWith("valitteppa")) {
+				System.out.println(key+"   " + formParams.getFirst(key));
+				String questionId = key.substring(10);
+				System.out.println(questionId);
+			}
+		}
+		System.out.println(formParams.getFirst("candidateDrop"));
+	}
+	
 }
