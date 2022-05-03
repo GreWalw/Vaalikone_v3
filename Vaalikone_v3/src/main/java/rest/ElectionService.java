@@ -2,6 +2,7 @@ package rest;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,17 +25,20 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
+import dao.Dao;
 import data.Question;
 import data.Answer;
 import data.Candidate;
 
 @Path("/electionservice")
 public class ElectionService {
+	private Dao dao;
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("vaalikone");
 	@Context
 	HttpServletRequest request;
 	@Context
 	HttpServletResponse response;
+
 	@GET
 	@Path("/readanswers")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -54,7 +58,7 @@ public class ElectionService {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@GET
 	@Path("/readquestions")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -76,7 +80,7 @@ public class ElectionService {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@GET
 	@Path("/readcandidates")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -96,7 +100,7 @@ public class ElectionService {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@PUT
 	@Path("/updateanswer")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -113,7 +117,7 @@ public class ElectionService {
 		List<Answer> list = readAnswers();
 		return list;
 	}
-	
+
 	@DELETE
 	@Path("/deleteanswer/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -130,7 +134,7 @@ public class ElectionService {
 		List<Answer> list = readAnswers();
 		return list;
 	}
-	
+
 //	@POST
 //	@Path("/addanswer")
 //	@Produces(MediaType.APPLICATION_JSON)
@@ -142,39 +146,50 @@ public class ElectionService {
 //		em.getTransaction().commit();
 //		// Calling the method readFish() of this service
 //	}
-	
-	
+
+//	public int checkAnswer() {
+//		EntityManager em = emf.createEntityManager();
+//		Candidate candidate = new Candidate();
+//		candidate.setCandidateId(0);
+//		em.find(Candidate.class, candId)
+//		
+//		return null;
+//	}
+//	
 
 	@POST
 	@Path("/addanswer")
 	@Consumes("application/x-www-form-urlencoded")
-	public void addAnswer(MultivaluedMap<String, String> formParams) {
-	    // Store the message
-		String candId=formParams.getFirst("candidateDrop");
+	public void addAnswer(MultivaluedMap<String, String> formParams) throws SQLException {
+		// Store the message
+		String candId = formParams.getFirst("candidateDrop");
+
 		Candidate candidate = new Candidate();
 		candidate.setId(candId);
+		int intCandId = Integer.parseInt(candId);
 		Question question = new Question();
-		for (String key: formParams.keySet()) {
+		for (String key : formParams.keySet()) {
 			if (key.startsWith("valitteppa")) {
-				
+
 				String answerValue = formParams.getFirst(key);
 				int answerValInt = Integer.parseInt(answerValue);
-				//System.out.println(key+" " + answerValue);
 				String questionId = key.substring(10);
-				//System.out.println(questionId);
 				Answer answer = new Answer();
 				question.setQuestionId(questionId);
 				answer.setCandidate(candidate);
 				answer.setQuestion(question);
 				answer.setAnswer(answerValInt);
+				// System.out.println("" + dao.readCandidateId());
+
 				EntityManager em = emf.createEntityManager();
+
 				em.getTransaction().begin();
 				em.persist(answer);// The actual insertion line
 				em.getTransaction().commit();
-				
+
 			}
 		}
-		
+
 	}
-	
+
 }
