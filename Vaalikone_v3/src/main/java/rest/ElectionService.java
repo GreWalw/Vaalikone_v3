@@ -2,6 +2,7 @@ package rest;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,22 +25,25 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
+import dao.Dao;
 import data.Question;
 import data.Answer;
 import data.Candidate;
 
 @Path("/electionservice")
 public class ElectionService {
+	private Dao dao;
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("vaalikone");
 	@Context
 	HttpServletRequest request;
 	@Context
 	HttpServletResponse response;
+
 	@GET
 	@Path("/readanswers")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void readAnswers() {
+	public List<Answer> readAnswers() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		List<Answer> list = em.createQuery("select a from Answer a").getResultList();
@@ -53,8 +57,9 @@ public class ElectionService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return list;
 	}
-	
+
 	@GET
 	@Path("/readquestions")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -64,19 +69,20 @@ public class ElectionService {
 		em.getTransaction().begin();
 		List<Question> list = em.createQuery("select q from Question q").getResultList();
 		List<Candidate> list2 = em.createQuery("select c from Candidate c").getResultList();
+		List<Answer> list3 = em.createQuery("select a from Answer a").getResultList();
 		em.getTransaction().commit();
 		em.close();
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/manageanswers.jsp");
 		request.setAttribute("questionlist", list);
 		request.setAttribute("candidatelist", list2);
+		request.setAttribute("answerlist", list3);
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
-
 			e.printStackTrace();
 		}
 	}
-	
+
 	@GET
 	@Path("/readcandidates")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -92,93 +98,57 @@ public class ElectionService {
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
-
 			e.printStackTrace();
 		}
 	}
 	
-	@PUT
-	@Path("/updateanswer")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Answer> updateAnswer(Answer Answer) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		Answer f = em.find(Answer.class, Answer.getId());
-		if (f != null) {
-			em.merge(Answer);// The actual update line
-		}
-		em.getTransaction().commit();
-		// Calling the method readFish() of this service
-		List<Answer> list = readAnswers();
-		return list;
-	}
-	
-	@DELETE
+	@GET
 	@Path("/deleteanswer/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Answer> deleteAnswer(@PathParam("id") int id) {
+	public void deleteAnswer(@PathParam("id") int id) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Answer f = em.find(Answer.class, id);
-		if (f != null) {
-			em.remove(f);// The actual insertion line
+		Answer a = em.find(Answer.class, id);
+		if (a != null) {
+			em.remove(a);
 		}
 		em.getTransaction().commit();
-		// Calling the method readFish() of this service
-		List<Answer> list = readAnswers();
-		return list;
+		readQuestions();
 	}
-	
+
 	@POST
 	@Path("/addanswer")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void addAnswer(Answer answers) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(answers);// The actual insertion line
-		em.getTransaction().commit();
-		// Calling the method readFish() of this service
-	}
-	
-	@POST
-	@Path("/answerform")
-	private void printForm(PrintWriter out) {
-        EntityManager em=emf.createEntityManager();
-        List<Candidate> candilist=em.createQuery("select c from Candidate c").getResultList();
-        List<Question> questionlist=em.createQuery("select q from Question q").getResultList();
-
-        out.println("<form action='/addanswerform/addanswer' method='get'</form>");
-        out.println("Answer: <input type='text' name='answer' value=''><br>");
-        out.println("Candi: <select name='candi'>");
-        for (Candidate candi:candilist) {
-            out.println("<option value='"+candi.getCandidateId()+"'>"+candi.getSurname()+candi.getFirstName());
-        }
-        out.println("</select><br>");
-        out.println("Question: <select name='q'>");
-        for (Question q:questionlist) {
-            out.println("<option value='"+q.getQuestionId()+"'>"+q.getQuestion());
-        }
-        out.println("</select><br>");
-        out.println("<input type='submit' name='ok' value='OK'><br>");
-        out.println("</form>");
-    }
-
-	@POST
-	@Path("/testmap")
 	@Consumes("application/x-www-form-urlencoded")
-	public void post(MultivaluedMap<String, String> formParams) {
-	    // Store the message
-		for (String key: formParams.keySet()) {
+	public void addAnswer(MultivaluedMap<String, String> formParams) throws SQLException {
+		// Store the message
+		String candId = formParams.getFirst("candidateDrop");
+
+		Candidate candidate = new Candidate();
+		candidate.setId(candId);
+		int intCandId = Integer.parseInt(candId);
+		Question question = new Question();
+		for (String key : formParams.keySet()) {
 			if (key.startsWith("valitteppa")) {
-				System.out.println(key+"   " + formParams.getFirst(key));
+
+				String answerValue = formParams.getFirst(key);
+				int answerValInt = Integer.parseInt(answerValue);
 				String questionId = key.substring(10);
-				System.out.println(questionId);
+				Answer answer = new Answer();
+				question.setQuestionId(questionId);
+				answer.setCandidate(candidate);
+				answer.setQuestion(question);
+				answer.setAnswer(answerValInt);
+				// System.out.println("" + dao.readCandidateId());
+
+				EntityManager em = emf.createEntityManager();
+
+				em.getTransaction().begin();
+				em.persist(answer);// The actual insertion line
+				em.getTransaction().commit();
+
 			}
 		}
-		System.out.println(formParams.getFirst("candidateDrop"));
+
 	}
-	
+
 }
