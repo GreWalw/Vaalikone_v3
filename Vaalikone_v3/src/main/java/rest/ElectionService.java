@@ -43,7 +43,7 @@ public class ElectionService {
 	@Path("/readanswers")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void readAnswers() {
+	public List<Answer> readAnswers() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		List<Answer> list = em.createQuery("select a from Answer a").getResultList();
@@ -57,6 +57,7 @@ public class ElectionService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return list;
 	}
 
 	@GET
@@ -68,11 +69,13 @@ public class ElectionService {
 		em.getTransaction().begin();
 		List<Question> list = em.createQuery("select q from Question q").getResultList();
 		List<Candidate> list2 = em.createQuery("select c from Candidate c").getResultList();
+		List<Answer> list3 = em.createQuery("select a from Answer a").getResultList();
 		em.getTransaction().commit();
 		em.close();
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/manageanswers.jsp");
 		request.setAttribute("questionlist", list);
 		request.setAttribute("candidatelist", list2);
+		request.setAttribute("answerlist", list3);
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
@@ -98,62 +101,20 @@ public class ElectionService {
 			e.printStackTrace();
 		}
 	}
-
-	@PUT
-	@Path("/updateanswer")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Answer> updateAnswer(Answer Answer) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		Answer f = em.find(Answer.class, Answer.getId());
-		if (f != null) {
-			em.merge(Answer);// The actual update line
-		}
-		em.getTransaction().commit();
-		// Calling the method readFish() of this service
-		List<Answer> list = readAnswers();
-		return list;
-	}
-
-	@DELETE
+	
+	@GET
 	@Path("/deleteanswer/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Answer> deleteAnswer(@PathParam("id") int id) {
+	public void deleteAnswer(@PathParam("id") int id) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Answer f = em.find(Answer.class, id);
-		if (f != null) {
-			em.remove(f);// The actual insertion line
+		Answer a = em.find(Answer.class, id);
+		if (a != null) {
+			em.remove(a);
 		}
 		em.getTransaction().commit();
-		// Calling the method readFish() of this service
-		List<Answer> list = readAnswers();
-		return list;
+		readQuestions();
 	}
-
-//	@POST
-//	@Path("/addanswer")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public void addAnswer(Answer answers) {
-//		EntityManager em = emf.createEntityManager();
-//		em.getTransaction().begin();
-//		em.persist(answers);// The actual insertion line
-//		em.getTransaction().commit();
-//		// Calling the method readFish() of this service
-//	}
-
-//	public int checkAnswer() {
-//		EntityManager em = emf.createEntityManager();
-//		Candidate candidate = new Candidate();
-//		candidate.setCandidateId(0);
-//		em.find(Candidate.class, candId)
-//		
-//		return null;
-//	}
-//	
 
 	@POST
 	@Path("/addanswer")
