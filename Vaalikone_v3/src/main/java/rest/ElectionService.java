@@ -29,7 +29,6 @@ import dao.Dao;
 import data.Question;
 import data.Answer;
 import data.Candidate;
-import data.Fish;
 
 @Path("/electionservice")
 public class ElectionService {
@@ -134,6 +133,7 @@ public class ElectionService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public List<Answer> deleteAnswer(@PathParam("id") int id) {
+		
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		Answer a = em.find(Answer.class, id);
@@ -144,28 +144,6 @@ public class ElectionService {
 		List<Answer> list = readAnswers();
 		return list;
 	}
-
-//	@POST
-//	@Path("/addanswer")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public void addAnswer(Answer answers) {
-//		EntityManager em = emf.createEntityManager();
-//		em.getTransaction().begin();
-//		em.persist(answers);// The actual insertion line
-//		em.getTransaction().commit();
-//		// Calling the method readFish() of this service
-//	}
-
-//	public int checkAnswer() {
-//		EntityManager em = emf.createEntityManager();
-//		Candidate candidate = new Candidate();
-//		candidate.setCandidateId(0);
-//		em.find(Candidate.class, candId)
-//		
-//		return null;
-//	}
-//	
 
 	@POST
 	@Path("/addanswer")

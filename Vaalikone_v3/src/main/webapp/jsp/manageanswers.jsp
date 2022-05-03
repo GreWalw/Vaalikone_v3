@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    
+    <%@ page import="java.util.ArrayList" %>   
+ 	<%@ page import="data.Answer" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,17 +40,15 @@ background-color: LightBlue;
 <c:forEach var="question" items="${requestScope.questionlist}" >
 <li><b>${question.questionNumber}: "${question.question}"</b><br>
 <input type="radio" id="r1" name="valitteppa${question.questionId}" value="1">
-<label for="r1">Completely agree</label>
+<label for="r1">Completely disagree</label>
 <input type="radio" id="r2" name="valitteppa${question.questionId}" value="2">
-<label for="r2">Agree</label>
+<label for="r2">Disagree</label>
 <input type="radio" id="r3" name="valitteppa${question.questionId}" value="3">
 <label for="r3">Can't say</label>
 <input type="radio" id="r4" name="valitteppa${question.questionId}" value="4">
-<label for="r4">Disagree</label>
+<label for="r4">Agree</label>
 <input type="radio" id="r5" name="valitteppa${question.questionId}" value="5">
-<label for="r5">Completely disagree</label><br>
-
-
+<label for="r5">Completely agree</label><br>
 <br>
 </c:forEach>
 <br><br>
@@ -55,12 +56,12 @@ background-color: LightBlue;
 </form>
 
 
-
+<ol>
 <c:forEach var="answer" items="${requestScope.answerlist}" >
-<li><b>ID:</b>${answer.answer}, "${answer.id}" <a href='../deleteanswer?id=${answer.id}'>Delete</a> <a
-				href='../readtoupdateanswer?id=${answer.id}'>Update</a>
+<li><b>ID:</b>${answer.id}, "${answer.answer}" <a href='/rest/electionservice/deleteanswer?id=${answer.id}'>Delete</a> <a
+				href='/rest/electionservice/updateanswer?id=${answer.id}'>Update</a>
 </c:forEach>
-
+</ol>
 
 
 
