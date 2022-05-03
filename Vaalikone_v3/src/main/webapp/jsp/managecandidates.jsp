@@ -22,7 +22,8 @@ background-color: LightBlue;
 <body>
 
 <a style="text-align: center;" href='/index.html'>Home page</a><br>
-<a style="text-align: center;" href='/showquestions'>Edit questions</a>
+<a style="text-align: center;" href='/showquestions'>Edit questions</a><br>
+<a style="text-align: center;" href='/rest/electionservice/readquestions'>CANDIDATE: ANSWER HERE</a>
 <h2>Manage candidates</h2>
 <li>
 <c:forEach var="candidate" items="${requestScope.candidatelist}" >

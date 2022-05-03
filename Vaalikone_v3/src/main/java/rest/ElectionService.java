@@ -76,7 +76,6 @@ public class ElectionService {
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
-
 			e.printStackTrace();
 		}
 	}
@@ -96,7 +95,6 @@ public class ElectionService {
 		try {
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
-
 			e.printStackTrace();
 		}
 	}
