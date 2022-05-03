@@ -67,7 +67,7 @@ background-color: LightBlue;
 </form>
 <ol>
 <c:forEach var="answer" items="${requestScope.answeridlist}" >
-<li><b>ID:</b>${answer.question}, "${answer.answer}" <a href='/rest/electionservice/deleteanswer/${answer.id}'>Delete</a>
+<li><b>ID:</b>${answer.question}, Answer: "${answer.answer}" <a href='/rest/electionservice/deleteanswer/${answer.id}'>Delete</a>
 </c:forEach>
 </ol>
 </body>

@@ -57,13 +57,7 @@ public class ElectionService {
 		System.out.println("" + intId);
 		ArrayList<String> answeridlist = null;
 		
-//		EntityManager em=emf.createEntityManager();
-//		em.getTransaction().begin();
-//		List<Answer> list=em.createQuery("select a from Answer a where a.cand_id=?1").setParameter(1, stId).getResultList();
-//		em.getTransaction().commit();
-//		em.close();
-		
-//		
+
 		
 		ArrayList<Answer> result = new ArrayList<>();
 		result=dao.readAnswersId(stId);
