@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,7 @@ public class ElectionService {
 	HttpServletRequest request;
 	@Context
 	HttpServletResponse response;
-
+	
 	@GET
 	@Path("/readanswers")
 	@Produces(MediaType.APPLICATION_JSON)
