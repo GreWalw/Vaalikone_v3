@@ -32,10 +32,10 @@ public class AnswerQueries extends HttpServlet {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
-		selectAllKids(out);
+		selectAllCandidates(out);
 	}
     
-	private void selectAllKids(PrintWriter out) {
+	private void selectAllCandidates(PrintWriter out) {
 		out.println("<h3>All candidates</h3>");
 		EntityManager em=emf.createEntityManager();
 		em.getTransaction().begin();

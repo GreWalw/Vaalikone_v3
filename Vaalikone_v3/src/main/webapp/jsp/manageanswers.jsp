@@ -57,5 +57,7 @@ background-color: LightBlue;
 </c:forEach>
 </ol>
 
+<a href='/rest/electionservice/readallquery'>Read All Query</a>
+
 </body>
 </html>
