@@ -95,5 +95,8 @@ public class Question implements Serializable {
 
 		return answer;
 	}
+	public String toString() {
+		return "Question: "+this.questionId+"/"+this.question;
+	}
 
 }

@@ -172,5 +172,9 @@ public class Candidate implements Serializable {
 
 		return answer;
 	}
+	
+	public String toString() {
+		return "Candidate: "+this.candidateId+"/"+this.age+"/"+this.candNo+"/"+this.descr+"/"+this.firstName+"/"+this.hometown+"/"+this.party+"/"+this.profession+"/"+this.surname;
+	}
 
 }
