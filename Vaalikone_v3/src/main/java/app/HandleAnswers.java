@@ -39,7 +39,7 @@ public class HandleAnswers extends HttpServlet {
 			list = deleteanswer(request);
 			break;
 		case "/updateanswer":
-			list = updateanswer(request);
+//			list = updateanswer(request);
 			break;
 		case "/readtoupdateanswer":
 			Answer a = readtoupdateanswer(request);
@@ -53,25 +53,25 @@ public class HandleAnswers extends HttpServlet {
 		rd.forward(request, response);
 	}
 
-	private List<Answer> updateanswer(HttpServletRequest request) {
-		// A Fish object to send to our web-service
-		Answer f = new Answer(request.getParameter("id"));
-		System.out.println(f);
-		String uri = "http://127.0.0.1:8080/rest/fishservice/updatefish";
-		Client c = ClientBuilder.newClient();
-		WebTarget wt = c.target(uri);
-		Builder b = wt.request();
-		// Here we create an Entity of a Fish object as JSON string format
-		Entity<Answer> e = Entity.entity(f, MediaType.APPLICATION_JSON);
-		// Create a GenericType to be able to get List of objects
-		// This will be the second parameter of post method
-		GenericType<List<Answer>> genericList = new GenericType<List<Answer>>() {
-		};
-
-		// Posting data (Entity<ArrayList<DogBreed>> e) to the given address
-		List<Answer> returnedList = b.put(e, genericList);
-		return returnedList;
-	}
+//	private List<Answer> updateanswer(HttpServletRequest request) {
+//		// A Fish object to send to our web-service
+//		Answer f = new Answer(request.getParameter("id"));
+//		System.out.println(f);
+//		String uri = "http://127.0.0.1:8080/rest/fishservice/updatefish";
+//		Client c = ClientBuilder.newClient();
+//		WebTarget wt = c.target(uri);
+//		Builder b = wt.request();
+//		// Here we create an Entity of a Fish object as JSON string format
+//		Entity<Answer> e = Entity.entity(f, MediaType.APPLICATION_JSON);
+//		// Create a GenericType to be able to get List of objects
+//		// This will be the second parameter of post method
+//		GenericType<List<Answer>> genericList = new GenericType<List<Answer>>() {
+//		};
+//
+//		// Posting data (Entity<ArrayList<DogBreed>> e) to the given address
+//		List<Answer> returnedList = b.put(e, genericList);
+//		return returnedList;
+//	}
 
 	private Answer readtoupdateanswer(HttpServletRequest request) {
 		String id = request.getParameter("id");

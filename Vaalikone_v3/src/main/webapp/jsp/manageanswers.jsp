@@ -57,5 +57,18 @@ background-color: LightBlue;
 </c:forEach>
 </ol>
 
+<form action="/rest/electionservice/sendanswers" method="post">
+<select name="answerDrop" id="answerDrop">
+<c:forEach var="candidate" items="${requestScope.candidatelist}" >
+<option value="${candidate.candidateId}">${candidate.candNo}: ${candidate.surname} ${candidate.firstName}</option>
+</c:forEach>
+</select>
+<input type="submit" value="Select your candidate">  
+</form>
+<ol>
+<c:forEach var="answer" items="${requestScope.answeridlist}" >
+<li><b>ID:</b>${answer.question}, "${answer.answer}" <a href='/rest/electionservice/deleteanswer/${answer.id}'>Delete</a>
+</c:forEach>
+</ol>
 </body>
 </html>

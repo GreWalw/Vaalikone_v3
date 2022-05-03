@@ -2,6 +2,8 @@ package rest;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +35,49 @@ import data.Candidate;
 
 @Path("/electionservice")
 public class ElectionService {
-	private Dao dao;
+	private Dao dao = new Dao("jdbc:mysql://localhost:3306/vaalikone?useSSL=false", "sikli", "kukkuu");
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("vaalikone");
 	@Context
 	HttpServletRequest request;
 	@Context
 	HttpServletResponse response;
+	
+
+	
+	
+	@POST
+	@Path("/sendanswers")
+	@Consumes("application/x-www-form-urlencoded")
+	public void sendAnswers(MultivaluedMap<String, String> formParams) throws SQLException {
+		System.out.println("testi");
+		System.out.println("Varmuude vuoks toine testi");
+		String stId=formParams.getFirst("answerDrop");
+		
+		int intId = Integer.parseInt(stId);
+		System.out.println("" + intId);
+		ArrayList<String> answeridlist = null;
+		
+//		EntityManager em=emf.createEntityManager();
+//		em.getTransaction().begin();
+//		List<Answer> list=em.createQuery("select a from Answer a where a.cand_id=?1").setParameter(1, stId).getResultList();
+//		em.getTransaction().commit();
+//		em.close();
+		
+//		
+		
+		ArrayList<Answer> result = new ArrayList<>();
+		result=dao.readAnswersId(stId);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/manageanswers.jsp");
+		request.setAttribute("answeridlist", result);
+		try {
+			System.out.println("nyt oltas menossa servletille takas");
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	@GET
 	@Path("/readanswers")
