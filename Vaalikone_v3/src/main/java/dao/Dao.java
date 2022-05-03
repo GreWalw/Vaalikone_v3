@@ -213,5 +213,18 @@ public class Dao {
 		}
 		return null;
 	}
+//	public ArrayList<Candidate> readCandidateId() throws SQLException {
+//		ArrayList<Candidate> list = new ArrayList<>();
+//		Candidate c = new Candidate();
+//		String sql = "select cand_id from answers";
+//		PreparedStatement pstmt = conn.prepareStatement(sql);
+//		ResultSet RS = pstmt.executeQuery();
+//		while (RS.next()) {
+//			
+//			c.setCandidateId(RS.getInt("cand_id"));
+//			list.add(c);
+//		}
+//		return list;
+//	}
 }
 
