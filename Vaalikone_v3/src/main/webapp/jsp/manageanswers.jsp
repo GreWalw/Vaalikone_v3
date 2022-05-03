@@ -29,13 +29,9 @@ background-color: LightBlue;
 <select name="candidateDrop" id="candidateDrop">
 <c:forEach var="candidate" items="${requestScope.candidatelist}" >
 <option value="${candidate.candidateId}">${candidate.candNo}: ${candidate.surname} ${candidate.firstName}</option>
-
 </c:forEach>
- 
-
 </select> 
-<br><br><br>
-
+<br><br>
 
 <c:forEach var="question" items="${requestScope.questionlist}" >
 <li><b>${question.questionNumber}: "${question.question}"</b><br>
@@ -55,15 +51,11 @@ background-color: LightBlue;
 <input type="submit" id="postanswers" name="submitanswers" value="Answer"> 
 </form>
 
-
 <ol>
 <c:forEach var="answer" items="${requestScope.answerlist}" >
-<li><b>ID:</b>${answer.id}, "${answer.answer}" <a href='/rest/electionservice/deleteanswer?id=${answer.id}'>Delete</a> <a
-				href='/rest/electionservice/updateanswer?id=${answer.id}'>Update</a>
+<li><b>ID:</b>${answer.id}, "${answer.answer}" <a href='/rest/electionservice/deleteanswer/${answer.id}'>Delete</a>
 </c:forEach>
 </ol>
-
-
 
 </body>
 </html>
