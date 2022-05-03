@@ -35,12 +35,17 @@ background-color: LightBlue;
 
 
 <c:forEach var="question" items="${requestScope.questionlist}" >
-<li><b>${question.questionNumber}</b><b>:</b> "${question.question}"<br><br>
-<input type="radio" name="valitteppa${question.questionId}" value="1">
-<input type="radio" name="valitteppa${question.questionId}" value="2">
-<input type="radio" name="valitteppa${question.questionId}" value="3">
-<input type="radio" name="valitteppa${question.questionId}" value="4">
-<input type="radio" name="valitteppa${question.questionId}" value="5">
+<li><b>${question.questionNumber}: "${question.question}"</b><br>
+<input type="radio" id="r1" name="valitteppa${question.questionId}" value="1">
+<label for="r1">Completely agree</label>
+<input type="radio" id="r2" name="valitteppa${question.questionId}" value="2">
+<label for="r2">Agree</label>
+<input type="radio" id="r3" name="valitteppa${question.questionId}" value="3">
+<label for="r3">Can't say</label>
+<input type="radio" id="r4" name="valitteppa${question.questionId}" value="4">
+<label for="r4">Disagree</label>
+<input type="radio" id="r5" name="valitteppa${question.questionId}" value="5">
+<label for="r5">Completely disagree</label><br>
 
 
 <br>
@@ -52,7 +57,8 @@ background-color: LightBlue;
 
 
 <c:forEach var="answer" items="${requestScope.answerlist}" >
-<li><b>ID:</b>${answer.answer}, "${answer.id}" 
+<li><b>ID:</b>${answer.answer}, "${answer.id}" <a href='../deleteanswer?id=${answer.id}'>Delete</a> <a
+				href='../readtoupdateanswer?id=${answer.id}'>Update</a>
 </c:forEach>
 
 

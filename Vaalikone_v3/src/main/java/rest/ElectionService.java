@@ -27,6 +27,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import data.Question;
 import data.Answer;
 import data.Candidate;
+import data.Fish;
 
 @Path("/electionservice")
 public class ElectionService {
@@ -40,7 +41,7 @@ public class ElectionService {
 	@Path("/readanswers")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void readAnswers() {
+	public List<Answer> readAnswers() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		List<Answer> list = em.createQuery("select a from Answer a").getResultList();
@@ -54,6 +55,7 @@ public class ElectionService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return list;
 	}
 	
 	@GET
@@ -103,14 +105,25 @@ public class ElectionService {
 	public List<Answer> updateAnswer(Answer Answer) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Answer f = em.find(Answer.class, Answer.getId());
-		if (f != null) {
-			em.merge(Answer);// The actual update line
+		Answer a = em.find(Answer.class, Answer.getId());
+		if (a != null) {
+			em.merge(Answer);
 		}
 		em.getTransaction().commit();
-		// Calling the method readFish() of this service
 		List<Answer> list = readAnswers();
 		return list;
+	}
+	
+	@GET
+	@Path("/readtoupdateanswer/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Answer readToUpdateAnswer(@PathParam("id") int id) {
+		EntityManager em=emf.createEntityManager();
+		em.getTransaction().begin();
+		Answer a=em.find(Answer.class, id);
+		em.getTransaction().commit();
+		return a;
 	}
 	
 	@DELETE
@@ -120,12 +133,11 @@ public class ElectionService {
 	public List<Answer> deleteAnswer(@PathParam("id") int id) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Answer f = em.find(Answer.class, id);
-		if (f != null) {
-			em.remove(f);// The actual insertion line
+		Answer a = em.find(Answer.class, id);
+		if (a != null) {
+			em.remove(a);
 		}
 		em.getTransaction().commit();
-		// Calling the method readFish() of this service
 		List<Answer> list = readAnswers();
 		return list;
 	}
