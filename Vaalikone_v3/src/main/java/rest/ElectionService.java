@@ -70,6 +70,7 @@ public class ElectionService {
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/showCandidatesAnswers.jsp");
 		request.setAttribute("answeridlist", result);
 		sendCandName(stId);
+		readQuestions2();
 		try {
 			
 			rd.forward(request, response);
@@ -100,6 +101,26 @@ public class ElectionService {
 		return list;
 	}
 
+	
+//	@GET
+//	@Path("/readquestions2")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	@Consumes(MediaType.APPLICATION_JSON)
+	public void readQuestions2() {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		List<Question> list = em.createQuery("select q from Question q").getResultList();
+		em.getTransaction().commit();
+		em.close();
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/showCandidatesAnswers.jsp");
+		request.setAttribute("questionlist", list);
+		try {
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@GET
 	@Path("/readquestions")
 	@Produces(MediaType.APPLICATION_JSON)

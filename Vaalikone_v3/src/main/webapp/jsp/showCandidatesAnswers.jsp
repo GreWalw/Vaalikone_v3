@@ -15,13 +15,14 @@
 
 
 
-
 <c:forEach var="candidate" items="${requestScope.candnamelist}" >
 
 <li><h2>${candidate.firstName} ${candidate.surname}, Candidate number: "${candidate.candNo}"</h2>
 </c:forEach>
 
-
+<c:forEach var="question" items="${requestScope.questionlist}">
+<li>Question ID: ${question.questionId}, Question: ${question.question}</li>
+</c:forEach>
 
 
 
