@@ -83,6 +83,32 @@ public class Dao {
 		}
 
 	}
+	
+	public ArrayList<Candidate> readCandName(String candId) {
+		getConnection();
+		
+		try {
+			String sql = "select * from candidates where CANDIDATE_ID=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, candId);
+			ResultSet RS=pstmt.executeQuery();
+			ArrayList<Candidate>candlist=new ArrayList<>();
+			while (RS.next()) {
+				Candidate c= new Candidate();
+				String candFirstName=RS.getString("FIRST_NAME");
+				String candSurname=RS.getString("SURNAME");
+				String candNo=RS.getString("CAND_NO");
+				int candNoInt = Integer.parseInt(candNo);
+				c.setFirstName(candFirstName);
+				c.setSurname(candSurname);
+				c.setCandNo(candNoInt);
+				candlist.add(c);
+			}
+			return candlist;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
 
 	public ArrayList<Question> readAllQuestions() {
 		ArrayList<Question> list = new ArrayList<>();

@@ -43,7 +43,12 @@ public class ElectionService {
 	@Context
 	HttpServletResponse response;
 	
-
+	public void sendCandName(String stId) {
+		ArrayList<Candidate> candNameList=new ArrayList<>();
+		candNameList=dao.readCandName(stId);
+		RequestDispatcher rd=request.getRequestDispatcher("/jsp/showCandidatesAnswers.jsp");
+		request.setAttribute("candnamelist", candNameList);
+	}
 	
 	
 	@POST
@@ -65,6 +70,7 @@ public class ElectionService {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/showCandidatesAnswers.jsp");
 		request.setAttribute("answeridlist", result);
+		sendCandName(stId);
 		try {
 			
 			rd.forward(request, response);
