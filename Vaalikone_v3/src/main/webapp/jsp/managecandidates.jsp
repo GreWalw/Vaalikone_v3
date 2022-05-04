@@ -12,8 +12,21 @@
 <title>Manage candidates</title>
 <style>
 
+html{
+     background-color:white;
+}
 body {
-background-color: LightBlue;
+	position:relative;
+	background-color: AliceBlue;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-top:0px;
+	margin-bottom:0px;
+	margin-left:150px;
+	margin-right:150px;
+	padding-left:200px;
+	padding-right:200px;
+	padding-bottom:90px;
+	padding-top:10px;
 }
 
 </style>
@@ -22,14 +35,29 @@ background-color: LightBlue;
 <body>
 
 <a style="text-align: center;" href='/index.html'>Home page</a><br>
-<a style="text-align: center;" href='/showquestions'>Edit questions</a><br>
-<a style="text-align: center;" href='/rest/electionservice/readquestions'>CANDIDATE: ANSWER HERE</a>
+<a style="text-align: center;" href='/showquestions'>Edit questions</a>
 <h2>Manage candidates</h2>
-<li>
+
 <c:forEach var="candidate" items="${requestScope.candidatelist}" >
-<li><b>ID:</b> ${candidate.candidateId} <b>Candidate number:</b> ${candidate.candNo} ${candidate.surname}, ${candidate.firstName} <b>Age:</b> ${candidate.age}, ${candidate.hometown} <b>Party:</b> ${candidate.party} <b>Profession:</b> ${candidate.profession}, "${candidate.descr}" <a href='/canddelete?id=${candidate.candidateId}'>delete</a> 
+<li><b>ID: ${candidate.candidateId} 
+<br>
+Candidate #${candidate.candNo}: ${candidate.surname}, ${candidate.firstName} </b>
+<br>
+Age: ${candidate.age}
+<br>
+Hometown: ${candidate.hometown} 
+<br>
+Party: ${candidate.party} 
+<br>
+Profession: ${candidate.profession}
+<br>
+Mayoral promise:
+"${candidate.descr}" 
+
+<a href='/canddelete?id=${candidate.candidateId}'>delete</a> 
+<br><br>
 </c:forEach>
-</li>
+
 <h2>Update a candidate</h2>
 <h4>Insert the candidate's ID you want to edit</h4>
 
