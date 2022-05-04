@@ -12,9 +12,22 @@
 </head>
 <body>
 <h1>No terve!</h1>
+
+
+
+
+<c:forEach var="candidate" items="${requestScope.candnamelist}" >
+
+<li><h2>${candidate.firstName} ${candidate.surname}, Candidate number: "${candidate.candNo}"</h2>
+</c:forEach>
+
+
+
+
+
 <ol>
 <c:forEach var="answer" items="${requestScope.answeridlist}" >
-<label value="">${answer.candidate}</label>
+
 <li><b>ID:</b>${answer.question}, Answer: "${answer.answer}" <a href='/rest/electionservice/deleteanswer/${answer.id}'>Delete</a>
 </c:forEach>
 
