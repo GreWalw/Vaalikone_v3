@@ -18,7 +18,6 @@ public class Answer implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	
 	private int answer;
 
 	//bi-directional many-to-one association to Candidate
@@ -68,5 +67,8 @@ public class Answer implements Serializable {
 		this.question = question;
 	}
 	
+	public String toString() {
+		return "Answer: "+this.id+"/"+this.answer;
+	}
 
 }

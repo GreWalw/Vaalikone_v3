@@ -14,8 +14,21 @@
 
 <style>
 
+html{
+     background-color: white;
+}
 body {
-background-color: LightBlue;
+	position:relative;
+	background-color: AliceBlue;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-top:0px;
+	margin-bottom:0px;
+	margin-left:150px;
+	margin-right:150px;
+	padding-left:200px;
+	padding-right:200px;
+	padding-bottom:290px;
+	padding-top:10px;
 }
 
 </style>
@@ -24,16 +37,16 @@ background-color: LightBlue;
 </head>
 <body>
 <a style="text-align: center;" href='/index.html'>Home page</a><br>
-<a style="text-align: center;" href='/candidates'>Edit candidates</a><br>
-<a style="text-align: center;" href='/rest/electionservice/readquestions'>CANDIDATE: ANSWER HERE</a>
+<a style="text-align: center;" href='/candidates'>Edit candidates</a>
+
 <h2>Manage questions</h2>
-<li>
+
+
 <c:forEach var="question" items="${requestScope.questionlist}" >
-
-<li><b>ID:</b> ${question.questionId} <b>NUMBER:</b> ${question.questionNumber} <b>QUESTION:</b>: ${question.question} <a href='/delete?id=${question.questionId}'>delete</a> 
-
+<li><b>ID:</b> ${question.questionId} <b>NUMBER:</b> ${question.questionNumber} <b>QUESTION:</b>: ${question.question} <a href='/delete?id=${question.questionId}'>delete</a>
+<br><br>
 </c:forEach>
-</li>
+
 
 <h2>Update a question</h2>
 <form action='update' method='post'> 

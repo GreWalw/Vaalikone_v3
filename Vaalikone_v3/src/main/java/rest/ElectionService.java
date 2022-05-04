@@ -37,6 +37,7 @@ import data.Candidate;
 public class ElectionService {
 	private Dao dao = new Dao("jdbc:mysql://localhost:3306/vaalikone?useSSL=false", "sikli", "kukkuu");
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("vaalikone");
+	
 	@Context
 	HttpServletRequest request;
 	@Context
@@ -100,12 +101,7 @@ public class ElectionService {
 		}
 		return list;
 	}
-
 	
-//	@GET
-//	@Path("/readquestions2")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
 	public void readQuestions2() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
