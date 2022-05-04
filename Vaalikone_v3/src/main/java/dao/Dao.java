@@ -47,13 +47,13 @@ public class Dao {
 	public ArrayList<Answer> readAnswersId(String stId) {
 		getConnection();
 		ArrayList<Answer>answerlist=new ArrayList<>();
-		System.out.println("terveisiä daosta");
+		
 		String daoId = stId;
 		
 		try {
 			String sql = "select * from answers where CAND_ID=?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			System.out.println("nyt preppistatessa");
+			
 			pstmt.setString(1, daoId);
 			ResultSet RS = pstmt.executeQuery();
 			while (RS.next()) {
@@ -63,6 +63,9 @@ public class Dao {
 				String candId = RS.getString("cand_id");
 				String get = RS.getString("answer");
 				String questId=RS.getString("quest_id");
+				String stanswerId=RS.getString("id");
+				int answerId = Integer.parseInt(stanswerId);
+				a.setId(answerId);
 				question.setQuestionId(questId);
 				candidate.setId(candId);
 				a.setCandidate(candidate);
@@ -70,7 +73,7 @@ public class Dao {
 				a.setAnswer(intGet);
 				a.setQuestion(question);
 				answerlist.add(a);
-				System.out.println("nyt ollaan whilen lopusa");
+				
 			}
 			System.out.println("" + answerlist);
 			return answerlist;

@@ -49,11 +49,11 @@ public class ElectionService {
 	@Path("/sendanswers")
 	@Consumes("application/x-www-form-urlencoded")
 	public void sendAnswers(MultivaluedMap<String, String> formParams) throws SQLException {
-		System.out.println("testi");
-		System.out.println("Varmuude vuoks toine testi");
+		
 		String stId=formParams.getFirst("answerDrop");
 		
 		int intId = Integer.parseInt(stId);
+		
 		System.out.println("" + intId);
 		ArrayList<String> answeridlist = null;
 		
@@ -62,10 +62,10 @@ public class ElectionService {
 		ArrayList<Answer> result = new ArrayList<>();
 		result=dao.readAnswersId(stId);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/jsp/manageanswers.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/showCandidatesAnswers.jsp");
 		request.setAttribute("answeridlist", result);
 		try {
-			System.out.println("nyt oltas menossa servletille takas");
+			
 			rd.forward(request, response);
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
@@ -147,7 +147,7 @@ public class ElectionService {
 			em.remove(a);
 		}
 		em.getTransaction().commit();
-		readQuestions();
+//		readQuestions();
 	}
 
 	@POST

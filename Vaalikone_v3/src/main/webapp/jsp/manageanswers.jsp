@@ -66,9 +66,6 @@ background-color: LightBlue;
 <input type="submit" value="Select your candidate">  
 </form>
 <ol>
-<c:forEach var="answer" items="${requestScope.answeridlist}" >
-<li><b>ID:</b>${answer.question}, Answer: "${answer.answer}" <a href='/rest/electionservice/deleteanswer/${answer.id}'>Delete</a>
-</c:forEach>
-</ol>
+
 </body>
 </html>
