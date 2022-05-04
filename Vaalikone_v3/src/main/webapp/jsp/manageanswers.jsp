@@ -10,20 +10,33 @@
 <meta charset="ISO-8859-1">
 <title>Answer Management</title>
 <style>
-
+html{
+     background-color: white;
+}
 body {
-background-color: LightBlue;
+	position:relative;
+	background-color: AliceBlue;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-top:0px;
+	margin-bottom:0px;
+	margin-left:150px;
+	margin-right:150px;
+	padding-left:200px;
+	padding-right:200px;
+	padding-bottom:90px;
+	padding-top:10px;
 }
 
 </style>
 </head>
 <body>
 <a style="text-align: center;" href='/index.html'>Home page</a><br>
-<a style="text-align: center;" href='/showquestions'>Edit questions</a><br>
-<a style="text-align: center;" href='/candidates'>Edit candidates</a>
-<h1>Questions</h1>
 
-<label for="candis">Choose a candidate:</label>
+<h2>CANDIDATE: Answer the questions here</h2>
+<p><b>INFO:</b><br>First: Choose your candidate number and name from the dropdown list below<br>
+Second: Answer the questions</p>
+
+<label for="candis"><b>Choose your candidate here:</b></label>
 
 <form action="/rest/electionservice/addanswer" method="post">
 <select name="candidateDrop" id="candidateDrop">
@@ -49,13 +62,20 @@ background-color: LightBlue;
 </c:forEach>
 <br><br>
 <input type="submit" id="postanswers" name="submitanswers" value="Answer"> 
+<button onClick="window.location.reload();">Refresh Page</button>
 </form>
 
+
+<!-- 
 <ol>
 <c:forEach var="answer" items="${requestScope.answerlist}" >
 <li><b>ID:</b>${answer.id}, "${answer.answer}" <a href='/rest/electionservice/deleteanswer/${answer.id}'>Delete</a>
 </c:forEach>
 </ol>
+ -->
+<br><br>
+<h2>CANDIDATE! EDIT YOUR ANSWERS HERE!</h2>
+<p><b>INFO:</b><br>If you want to change your answers select your name from the list below and push "Edit answers"</p>
 
 <form action="/rest/electionservice/sendanswers" method="post">
 <select name="answerDrop" id="answerDrop">
@@ -63,7 +83,7 @@ background-color: LightBlue;
 <option value="${candidate.candidateId}">${candidate.candNo}: ${candidate.surname} ${candidate.firstName}</option>
 </c:forEach>
 </select>
-<input type="submit" value="Select your candidate">  
+<input type="submit" value="Edit answers">  
 </form>
 <ol>
 

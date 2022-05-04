@@ -18,6 +18,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin Question Page</title>
+
+<style>
+
+html{
+     background-color:oldlace;
+}
+body {
+	position:relative;
+	background-color: white;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-top:0px;
+	margin-bottom:0px;
+	margin-left:150px;
+	margin-right:150px;
+	padding-left:200px;
+	padding-right:200px;
+	padding-bottom:200px;
+	padding-top:10px;
+}
+
+</style>
+
 </head>
 <body>
 
