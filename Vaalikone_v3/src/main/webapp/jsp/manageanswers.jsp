@@ -65,14 +65,6 @@ Second: Answer the questions</p>
 <button onClick="window.location.reload();">Refresh Page</button>
 </form>
 
-
-<!-- 
-<ol>
-<c:forEach var="answer" items="${requestScope.answerlist}" >
-<li><b>ID:</b>${answer.id}, "${answer.answer}" <a href='/rest/electionservice/deleteanswer/${answer.id}'>Delete</a>
-</c:forEach>
-</ol>
- -->
 <br><br>
 <h2>CANDIDATE! EDIT YOUR ANSWERS HERE!</h2>
 <p><b>INFO:</b><br>If you want to change your answers select your name from the list below and push "Edit answers"</p>
