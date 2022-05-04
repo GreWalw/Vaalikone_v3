@@ -172,6 +172,7 @@ public class Candidate implements Serializable {
 
 		return answer;
 	}
+
 	public String toString() {
 		return "Candidate ID: "+this.candidateId;
 	}

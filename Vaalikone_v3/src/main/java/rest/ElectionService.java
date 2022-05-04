@@ -37,6 +37,7 @@ import data.Candidate;
 public class ElectionService {
 	private Dao dao = new Dao("jdbc:mysql://localhost:3306/vaalikone?useSSL=false", "sikli", "kukkuu");
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("vaalikone");
+	
 	@Context
 	HttpServletRequest request;
 	@Context
@@ -92,6 +93,48 @@ public class ElectionService {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	@GET
+	@Path("/readallquery")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void selectAllKids(PrintWriter out) {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		List<Candidate> list=em.createQuery("select c from Candidate c").getResultList();
+		em.getTransaction().commit();
+		em.close();
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/manageanswers.jsp");
+		request.setAttribute("answerlist", list);
+		try {
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		printCandidatesAndAll(out, list);
+	}
+	
+//	private void selectAllKidss(PrintWriter out) {
+//		out.println("<h3>All candidates</h3>");
+//		EntityManager em=emf.createEntityManager();
+//		em.getTransaction().begin();
+//		List<Candidate> list=em.createQuery("select c from Candidate c").getResultList();
+//		em.getTransaction().commit();
+//		em.close();
+//		printCandidatesAndAll(out, list);
+//	}
+	
+	public void printCandidatesAndAll(PrintWriter out, List<Candidate> list) {
+		// TODO Auto-generated method stub
+		out.println("<h3>All candidates and their answers to the questions</h3>");
+		for (int i=0;list!=null && i<list.size();i++) {
+			Candidate c=list.get(i);
+			out.println(c+"<br>");
+			for (Answer a : c.getAnswers()) {
+				out.println(a.getQuestion() + " candidate answered: " + a + "<br>");
+			}
+		}
 	}
 
 	@GET

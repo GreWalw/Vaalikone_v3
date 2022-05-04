@@ -68,5 +68,8 @@ public class Answer implements Serializable {
 		this.question = question;
 	}
 	
+	public String toString() {
+		return "Answer: "+this.id+"/"+this.answer;
+	}
 
 }
