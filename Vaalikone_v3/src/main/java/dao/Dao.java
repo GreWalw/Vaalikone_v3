@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import data.Answer;
 import data.Candidate;
 import data.Question;
 
@@ -40,6 +41,47 @@ public class Dao {
 			System.out.println(e.getMessage());
 			return false;
 		}
+	}
+
+	@SuppressWarnings("null")
+	public ArrayList<Answer> readAnswersId(String stId) {
+		getConnection();
+		ArrayList<Answer>answerlist=new ArrayList<>();
+		
+		String daoId = stId;
+		
+		try {
+			String sql = "select * from answers where CAND_ID=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, daoId);
+			ResultSet RS = pstmt.executeQuery();
+			while (RS.next()) {
+				Answer a=new Answer();
+				Candidate candidate=new Candidate();
+				Question question=new Question();
+				String candId = RS.getString("cand_id");
+				String get = RS.getString("answer");
+				String questId=RS.getString("quest_id");
+				String stanswerId=RS.getString("id");
+				int answerId = Integer.parseInt(stanswerId);
+				a.setId(answerId);
+				question.setQuestionId(questId);
+				candidate.setId(candId);
+				a.setCandidate(candidate);
+				int intGet = Integer.parseInt(get);
+				a.setAnswer(intGet);
+				a.setQuestion(question);
+				answerlist.add(a);
+				
+			}
+			System.out.println("" + answerlist);
+			return answerlist;
+			
+		} catch (SQLException e) {
+			return null;
+		}
+
 	}
 
 	public ArrayList<Question> readAllQuestions() {
@@ -107,7 +149,8 @@ public class Dao {
 	public ArrayList<Question> addQuestion(String kysmari, int qnumber) {
 		Question que = null;
 		try {
-			String sql = "insert into questions (question, question_number) values ('" + kysmari + "', '" + qnumber + "')";
+			String sql = "insert into questions (question, question_number) values ('" + kysmari + "', '" + qnumber
+					+ "')";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
 			return readAllQuestions();
@@ -203,7 +246,9 @@ public class Dao {
 			String cHometown, String cParty, String cProfession, String cDescription) {
 //		Candidates cand = null;
 		try {
-			String sql = "insert into candidates(surname, first_name, cand_no, age, hometown, party, profession, descr) values ('" + cSurname + "', '" + cFirstname + "', '" + cCandnumb + "', '" + cAge + "', '" + cHometown + "', '" + cParty + "', '" + cProfession + "', '" + cDescription + "')";
+			String sql = "insert into candidates(surname, first_name, cand_no, age, hometown, party, profession, descr) values ('"
+					+ cSurname + "', '" + cFirstname + "', '" + cCandnumb + "', '" + cAge + "', '" + cHometown + "', '"
+					+ cParty + "', '" + cProfession + "', '" + cDescription + "')";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
 			return readAllCandidates();
@@ -227,4 +272,3 @@ public class Dao {
 //		return list;
 //	}
 }
-
