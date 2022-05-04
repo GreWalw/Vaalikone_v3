@@ -31,6 +31,7 @@ body {
 </style>
 </head>
 <body>
+
 <a href='/rest/electionservice/readquestions'>Back to answers</a>
 <h2>Edit answers</h2>
 
@@ -38,11 +39,25 @@ body {
 <h2>${candidate.firstName} ${candidate.surname} <br> Candidate number: ${candidate.candNo}</h2>
 </c:forEach>
 
-<ol>
-<c:forEach var="answer" items="${requestScope.answeridlist}">
-<li><b>ID:</b>${answer.question}, Answer: "${answer.answer}" <a href='/rest/electionservice/deleteanswer/${answer.id}'>Delete</a>
+<c:forEach var="question" items="${requestScope.questionlist}">
+<li>Question: ${question.questionId}, Question: ${question.question}</li>
+<br>
 </c:forEach>
-</ol>
+
+<br><br>
+<p>
+<b>1 = Completely disagree | 2 = Disagree | 3 = Can't say | 4 = Agree | 5 = Completely agree</b>
+</p>
+<p>
+*Be sure that you edit the right answer, check the number*
+</p>
+<br>
+
+
+<c:forEach var="answer" items="${requestScope.answeridlist}">
+<li>${answer.question}, Answer: "${answer.answer}" <a href='/rest/electionservice/deleteanswer/${answer.id}'>Delete</a>
+<br><br>
+</c:forEach>
 	
 <button onClick="window.location.reload();">Refresh Page</button>
 	
