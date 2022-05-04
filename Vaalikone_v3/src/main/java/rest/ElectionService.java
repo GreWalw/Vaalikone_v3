@@ -2,6 +2,8 @@ package rest;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,14 +35,45 @@ import data.Candidate;
 
 @Path("/electionservice")
 public class ElectionService {
-	private Dao dao;
+	private Dao dao = new Dao("jdbc:mysql://localhost:3306/vaalikone?useSSL=false", "sikli", "kukkuu");
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("vaalikone");
 	
 	@Context
 	HttpServletRequest request;
 	@Context
 	HttpServletResponse response;
+	
 
+	
+	
+	@POST
+	@Path("/sendanswers")
+	@Consumes("application/x-www-form-urlencoded")
+	public void sendAnswers(MultivaluedMap<String, String> formParams) throws SQLException {
+		
+		String stId=formParams.getFirst("answerDrop");
+		
+		int intId = Integer.parseInt(stId);
+		
+		System.out.println("" + intId);
+		ArrayList<String> answeridlist = null;
+		
+
+		
+		ArrayList<Answer> result = new ArrayList<>();
+		result=dao.readAnswersId(stId);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/showCandidatesAnswers.jsp");
+		request.setAttribute("answeridlist", result);
+		try {
+			
+			rd.forward(request, response);
+		} catch (ServletException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@GET
 	@Path("/readanswers")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -156,7 +190,7 @@ public class ElectionService {
 			em.remove(a);
 		}
 		em.getTransaction().commit();
-		readQuestions();
+//		readQuestions();
 	}
 
 	@POST
